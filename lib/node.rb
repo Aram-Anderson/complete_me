@@ -4,10 +4,15 @@ class Node
 
   def initialize
     @children = {}
+    @count = 0
   end
 
   def children
     @children
+  end
+
+  def count
+    @count
   end
 
   def insert(word)
