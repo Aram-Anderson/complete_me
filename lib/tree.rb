@@ -1,7 +1,7 @@
 require_relative 'node'
 
 class Tree
-  attr_reader :root
+  attr_reader :root, :children
 
   def initialize
     @root = Node.new
