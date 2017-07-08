@@ -12,7 +12,7 @@ class Tree
       word.chars.each do |letter|
         if word.slice(0, 1) == k
           word.slice!(0, 1)
-          insert(word, node = node.children)
+          insert(word, node = node[k].children)
         else
           node.children[letter] = Node.new
         end
