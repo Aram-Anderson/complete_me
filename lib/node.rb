@@ -1,10 +1,11 @@
 class Node
 
-  attr_accessor :children
+  attr_accessor :children, :valid_word
 
   def initialize
-    @children = {}
+    @children = []
     @count = 0
+    @valid_word = false
   end
 
   def children
