@@ -1,6 +1,6 @@
 class Node
 
-  attr_writer :children, :insert
+  attr_accessor :children
 
   def initialize
     @children = {}
