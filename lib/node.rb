@@ -15,9 +15,4 @@ class Node
     @count
   end
 
-  def insert(word)
-    word.chars.each do |letter|
-      self.children[letter] = Node.new
-    end
-  end
 end
