@@ -9,11 +9,11 @@ class Tree
 
   def insert(word, node = @root)
     node.children.each do |k, v|
-      if word.slice(0, 1) == k
-        word.slice!(0, 1)
-        insert(word, node = node.children)
-      else
-        word.chars.each do |letter|
+      word.chars.each do |letter|
+        if word.slice(0, 1) == k
+          word.slice!(0, 1)
+          insert(word, node = node.children)
+        else
           node.children[letter] = Node.new
         end
       end
