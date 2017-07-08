@@ -4,6 +4,7 @@ class Tree
   attr_reader :root
 
   def initialize
-    @root = Node.new
+    @root = {"a" => Node.new}
   end
+
 end
