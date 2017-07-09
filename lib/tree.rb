@@ -13,24 +13,39 @@ class Tree
     @count
   end
 
-  def insert(word, node = @root)
+  def insert(word, node = @root, index = -1)
     node.freq += 1
-    if word.empty?
+    index += 1
+    unless word[index]
       @root.freq = 0
-      node.valid_word = true
+      node.valid_word = word
       @count += 1
     else
-      saved_letter = word.slice!(0, 1)
+      saved_letter = word[index]
       unless node.children[saved_letter].nil?
-        insert(word, node.children[saved_letter])
+        insert(word, node.children[saved_letter], index)
       else
         node.children[saved_letter] = Node.new
-        insert(word, node.children[saved_letter])
+        insert(word, node.children[saved_letter], index)
       end
     end
   end
 
-  def suggest(word)
+  def suggest(word, node = @root, suggestions = [])
+    return if node.children.nil?
+    until word.empty?
+      check_letter = word.slice!(0, 1)
+      node = node.children[check_letter]
+    end
+      node.children.each do | k, v |
+        # temp_array << k
+      if v.valid_word
+        suggestions << v.valid_word
+      end
+      # suggestions << temp_array.flatten.join
+      suggest(word, v, suggestions)
+    end
+    suggestions
   end
 
   def populate(file)

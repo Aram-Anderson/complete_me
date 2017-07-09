@@ -22,10 +22,22 @@ class TreeTest < Minitest::Test
     assert_equal 4, tree.insert("cake")
   end
 
+  def test_it_can_suggest_words
+    tree = Tree.new
+    expected = ["pizza", "pizzeria", "pizzicato", "pizzle", "pize"]
+    tree.insert("pizza")
+
+    assert_equal ["pizza"], tree.suggest("piz")
+
+    tree.populate('/usr/share/dict/words')
+
+    assert_equal expected, tree.suggest("piz")
+  end
+
   def test_it_can_populate_with_dictionary
-    complete = Tree.new
-    
-    assert_equal 235886, complete.populate('/usr/share/dict/words')
+    tree = Tree.new
+
+    assert_equal 235886, tree.populate('/usr/share/dict/words')
   end
 
 end

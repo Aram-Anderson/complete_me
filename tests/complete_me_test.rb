@@ -7,6 +7,7 @@ require 'pry'
 class CompleteMeTest < Minitest::Test
   def test_it_has_a_root
     complete = CompleteMe.new
+
     assert complete.trie.root
   end
 
@@ -19,6 +20,18 @@ class CompleteMeTest < Minitest::Test
     complete.insert("calzone")
 
     assert_equal 4, complete.insert("cake")
+  end
+
+  def test_it_can_suggest_words
+    complete = Tree.new
+    expected = ["pizza", "pizzeria", "pizzicato", "pizzle", "pize"]
+    complete.insert("pizza")
+
+    assert_equal ["pizza"], complete.suggest("piz")
+
+    complete.populate('/usr/share/dict/words')
+
+    assert_equal expected, complete.suggest("piz")
   end
 
   def test_it_can_populate_with_dictionary

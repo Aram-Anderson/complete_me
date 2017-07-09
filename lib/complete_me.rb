@@ -14,7 +14,12 @@ class CompleteMe
     @trie.insert(word)
   end
 
+  def select(sub_word, suggestion)
+    @trie.select(sub_word, suggestion)
+  end
+
   def suggest(word)
+    @trie.suggest(word)
   end
 
   def populate(file)
