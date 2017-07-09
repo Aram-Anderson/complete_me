@@ -13,11 +13,19 @@ class TreeTest < Minitest::Test
 
   def test_if_it_returns_count
     tree = Tree.new
+
     assert_equal 1, tree.insert("pizza")
+
     tree.insert("pasta")
     tree.insert("calzone")
+
     assert_equal 4, tree.insert("cake")
-    binding.pry
+  end
+
+  def test_it_can_populate_with_dictionary
+    complete = Tree.new
+    
+    assert_equal 235886, complete.populate('/usr/share/dict/words')
   end
 
 end
