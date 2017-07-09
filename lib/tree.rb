@@ -31,11 +31,15 @@ class Tree
   end
 
   def suggest(word)
-
   end
 
-  def load(file)
-
+  def populate(file)
+    words = File.readlines(file)
+    words.each do |word|
+      word.chomp!
+      insert(word)
+    end
+    @count
   end
 
 
