@@ -9,10 +9,13 @@ class Tree
     @count = 0
   end
 
+  def count
+    @count
+  end
+
   def insert(word, node = @root)
     node.freq += 1
-    if
-      word == ""
+    if word.empty?
       @root.freq = 0
       node.valid_word = true
       @count += 1
@@ -25,6 +28,10 @@ class Tree
         insert(word, node.children[saved_letter])
       end
     end
+  end
+
+  def suggest(word)
+
   end
 
   def load(file)

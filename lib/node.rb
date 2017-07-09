@@ -5,7 +5,7 @@ class Node
 
   def initialize
     @children = {}
-    @valid_word = false
+    @valid_word = nil
     @freq = 0
   end
 end
