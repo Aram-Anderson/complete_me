@@ -38,11 +38,9 @@ class Tree
       node = node.children[check_letter]
     end
       node.children.each do | k, v |
-        # temp_array << k
       if v.valid_word
         suggestions << v.valid_word
       end
-      # suggestions << temp_array.flatten.join
       suggest(word, v, suggestions)
     end
     suggestions
