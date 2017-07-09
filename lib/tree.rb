@@ -21,9 +21,9 @@ class Tree
         word.slice!(0, 1)
         insert(word, node.children[saved_letter])
       else
-      node.children[saved_letter] = Node.new
-      node.freq += 1
-      insert(word, node.children[saved_letter])
+        node.children[saved_letter] = Node.new
+        node.freq += 1
+        insert(word, node.children[saved_letter])
       end
     end
   end
