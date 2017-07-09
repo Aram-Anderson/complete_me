@@ -17,6 +17,7 @@ class TreeTest < Minitest::Test
     tree.insert("pasta")
     tree.insert("calzone")
     assert_equal 4, tree.insert("cake")
+    binding.pry
   end
 
 end

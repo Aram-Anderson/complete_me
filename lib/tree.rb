@@ -17,8 +17,7 @@ class Tree
       @count += 1
     else
       saved_letter = word.slice!(0, 1)
-      if saved_letter == node.children[saved_letter]
-        word.slice!(0, 1)
+      unless node.children[saved_letter].nil?
         insert(word, node.children[saved_letter])
       else
         node.children[saved_letter] = Node.new
