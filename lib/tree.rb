@@ -2,7 +2,7 @@ require_relative 'node'
 
 class Tree
   attr_accessor :insert
-  attr_reader :root
+  attr_reader :root, :count
 
   def initialize
     @root = Node.new
@@ -46,7 +46,8 @@ class Tree
       end
       suggest(word, v, suggestions)
     end
-    suggestions
+    sorted_suggestions = suggestions.sort_by
+
   end
 
   def populate(file)
@@ -58,5 +59,30 @@ class Tree
     @count
   end
 
+  def delete(word, node = @root, index = 0, temp_letter = word[index])
+    if node.children[temp_letter].freq == 1 && node.children.count == 1
+      node.children = {}
+    else
+      binding.pry
+
+      index += 1
+      temp_letter = word[index]
+      delete(word, node.children[temp_letter], index, temp_letter)
+
+    end
+  end
+    #   temp_letter = word[0]
+    #   index = 1
+    #   node = @root
+    # until (node.children.count == 1 && node.children[temp_letter].freq == 1) || temp_letter == word[-1]
+    #   temp_letter = word[index]
+    #   index += 1
+    #   return if node.children.nil?
+    #   node = node.children[temp_letter]
+    #   binding.pry
+    # end
+    # return if index == word.length - 1 || node.children.nil?
+    # node.children = {}
+  # end
 
 end
