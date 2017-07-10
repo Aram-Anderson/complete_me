@@ -26,4 +26,8 @@ class CompleteMe
     @trie.populate(file)
   end
 
+  def delete(word)
+    @trie.delete(word)
+  end
+
 end
