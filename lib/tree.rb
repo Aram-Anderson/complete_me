@@ -18,8 +18,11 @@ class Tree
     index += 1
     unless word[index]
       @root.freq = 0
+      if node.valid_word.nil?
+        @count += 1
+      end
       node.valid_word = word
-      @count += 1
+      @count
     else
       saved_letter = word[index]
       unless node.children[saved_letter].nil?
