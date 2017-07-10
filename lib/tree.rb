@@ -2,7 +2,7 @@ require_relative 'node'
 
 class Tree
   attr_accessor :insert
-  attr_reader :root
+  attr_reader :root, :count
 
   def initialize
     @root = Node.new
@@ -42,7 +42,7 @@ class Tree
     end
       node.children.each do | k, v |
       if v.valid_word
-        suggestions << v.valid_word
+        suggestions << [v.freq] = v.valid_word
       end
       suggest(word, v, suggestions)
     end
@@ -58,5 +58,28 @@ class Tree
     @count
   end
 
+  def delete(word, node = @root, index = 0, temp_letter = word[index])
+    if node.children[temp_letter].freq == 1 && node.children.count == 1
+      node.children = {}
+    else
+      index += 1
+      temp_letter = word[index]
+      delete(word, node.children[temp_letter], index, temp_letter)
+      binding.pry
+    end
+  end
+    #   temp_letter = word[0]
+    #   index = 1
+    #   node = @root
+    # until (node.children.count == 1 && node.children[temp_letter].freq == 1) || temp_letter == word[-1]
+    #   temp_letter = word[index]
+    #   index += 1
+    #   return if node.children.nil?
+    #   node = node.children[temp_letter]
+    #   binding.pry
+    # end
+    # return if index == word.length - 1 || node.children.nil?
+    # node.children = {}
+  # end
 
 end

@@ -1,7 +1,6 @@
 require 'pry'
 class Node
-  attr_reader
-  attr_accessor :freq, :children, :valid_word
+  attr_accessor :children, :valid_word, :freq
 
   def initialize
     @children = {}
