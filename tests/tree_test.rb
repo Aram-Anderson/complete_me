@@ -24,18 +24,18 @@ class TreeTest < Minitest::Test
 
   def test_it_can_suggest_words
     tree = Tree.new
-    expected = ["pizza", "pizzeria", "pizzicato", "pizzle", "pize"]
+    expected = ["pizzeria", "pizzicato", "pizzle", "pizza", "pize"]
     tree.insert("pizzeria")
     tree.insert("pizzicato")
     tree.insert("pizzle")
     tree.insert("pize")
     tree.insert("pizza")
 
-    assert_equal [["pizza", 0]], tree.suggest("piz")
+    assert_equal ["pizzeria", "pizzicato", "pizzle", "pizza", "pize"], tree.suggest("piz")
 
-    # tree.populate('/usr/share/dict/words')
+    tree.populate('/usr/share/dict/words')
 
-    # assert_equal expected, tree.suggest("piz")
+    assert_equal expected, tree.suggest("piz")
   end
 
   def test_it_can_populate_with_dictionary

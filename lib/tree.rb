@@ -1,8 +1,7 @@
 require_relative 'node'
 
 class Tree
-  attr_accessor :insert
-  attr_reader :root, :count
+  attr_reader :root
 
   def initialize
     @root = Node.new
@@ -53,7 +52,6 @@ class Tree
   def populate_suggest(word, node, suggestions = [])
     if node.valid_word == true
       suggestions << [word, node.weight]
-      # binding.pry
     end
     unless node.children.empty?
       node.children.keys.each do | letter |
@@ -61,7 +59,6 @@ class Tree
         populate_suggest(temp_suggest, node.children[letter], suggestions)
       end
     end
-    # binding.pry
     parse_suggest(suggestions)
   end
 
@@ -82,7 +79,6 @@ class Tree
   def delete(word, node = @root, index = 0, temp_letter = word[index])
     if node.children[temp_letter].freq == 1 && node.children.count == 1
       node.children = {}
-      binding.pry
     else
       index += 1
       temp_letter = word[index]
