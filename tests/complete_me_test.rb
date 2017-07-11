@@ -4,8 +4,6 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require '../lib/complete_me.rb'
 require 'pry'
-require 'simplecov'
-SimpleCov.start
 
 
 class CompleteMeTest < Minitest::Test
@@ -41,13 +39,6 @@ class CompleteMeTest < Minitest::Test
   end
 
   def test_it_can_suggest_words
-<<<<<<< HEAD
-    complete = Tree.new
-    expected = ["pizza", "pizzeria", "pizzicato", "pizzle", "pize"]
-    complete.insert("pizza")
-
-    assert_equal ["pizza"], complete.suggest("piz")
-=======
     completion = CompleteMe.new
     expected = ["pizzeria", "pizzicato", "pizzle", "pizza", "pize"]
     completion.insert("pizzeria")
@@ -55,7 +46,6 @@ class CompleteMeTest < Minitest::Test
     completion.insert("pizzle")
     completion.insert("pize")
     completion.insert("pizza")
->>>>>>> 783c0038bcf8440d0d0244a2874ec5183b09599b
 
     assert_equal ["pizzeria", "pizzicato", "pizzle", "pizza", "pize"], completion.suggest("piz")
 

@@ -1,7 +1,7 @@
 require "minitest"
-require "minitest/pride"
+require "minitest/emoji"
 require "minitest/autorun"
-require "../complete_me/lib/complete_me"
+require '../lib/complete_me'
 
 class CompleteMeTest < Minitest::Test
   attr_reader :cm
@@ -65,6 +65,7 @@ class CompleteMeTest < Minitest::Test
   end
 
   def medium_word_list
+    skip
     File.read("./test/medium.txt")
   end
 
