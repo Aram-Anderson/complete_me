@@ -1,7 +1,9 @@
 require "minitest"
 require "minitest/emoji"
 require "minitest/autorun"
+require 'simplecov'
 require './lib/complete_me'
+SimpleCov.start
 
 class CompleteMeTest < Minitest::Test
   attr_reader :cm
