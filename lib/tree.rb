@@ -18,10 +18,10 @@ class Tree
     index += 1
     unless word[index]
       @root.freq = 0
-      if node.valid_word.nil?
+      if node.valid_word == false
         @count += 1
       end
-      node.valid_word = word
+      node.valid_word = true
       @count
     else
       saved_letter = word[index]
@@ -34,20 +34,34 @@ class Tree
     end
   end
 
-  def suggest(word, node = @root, suggestions = [])
-    return if node.children.nil?
-    until word.empty?
-      check_letter = word.slice!(0, 1)
+  def select(sub_string, suggestion, node = @root)
+    until suggestion.empty?
+      check_letter = suggestion.slice!(0, 1)
       node = node.children[check_letter]
     end
-      node.children.each do | k, v |
-      if v.valid_word
-        suggestions << v.valid_word
-      end
-      suggest(word, v, suggestions)
-    end
-    sorted_suggestions = suggestions.sort_by
+    node.weight += 1
+  end
 
+  def suggest(word, node = @root)
+     word.each_char do |letter|
+      node.children.has_key?(letter)
+      node = node.children[letter]
+    end
+    populate_suggest(word, node)
+  end
+
+  def populate_suggest(word, node, suggestions = [])
+    if node.valid_word == true
+      suggestions << [word, node.weight]
+    end
+    unless node.children.empty?
+      node.children.keys.each do | letter |
+        # node.valid_word == false
+        temp_suggest = word + letter
+        node = node.children[letter]
+        populate_suggest(temp_suggest, node, suggestions)
+      end
+    end
   end
 
   def populate(file)
@@ -57,6 +71,18 @@ class Tree
       insert(word)
     end
     @count
+  end
+
+  def delete(word, node = @root, index = 0, temp_letter = word[index])
+    if node.children[temp_letter].freq == 1 && node.children.count == 1
+      node.children = {}
+    else
+      binding.pry
+
+      index += 1
+      temp_letter = word[index]
+      delete(word, node.children[temp_letter], index, temp_letter)
+    end
   end
 
 end
