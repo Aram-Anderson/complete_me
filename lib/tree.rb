@@ -53,15 +53,21 @@ class Tree
   def populate_suggest(word, node, suggestions = [])
     if node.valid_word == true
       suggestions << [word, node.weight]
+      # binding.pry
     end
     unless node.children.empty?
       node.children.keys.each do | letter |
-        # node.valid_word == false
         temp_suggest = word + letter
-        node = node.children[letter]
-        populate_suggest(temp_suggest, node, suggestions)
+        populate_suggest(temp_suggest, node.children[letter], suggestions)
       end
     end
+    # binding.pry
+    parse_suggest(suggestions)
+  end
+
+  def parse_suggest(suggestions)
+    temp = suggestions.sort {|a, b| b[1] <=> a[1]}
+    temp.map {|word| word[0]}
   end
 
   def populate(file)
@@ -76,9 +82,8 @@ class Tree
   def delete(word, node = @root, index = 0, temp_letter = word[index])
     if node.children[temp_letter].freq == 1 && node.children.count == 1
       node.children = {}
-    else
       binding.pry
-
+    else
       index += 1
       temp_letter = word[index]
       delete(word, node.children[temp_letter], index, temp_letter)
