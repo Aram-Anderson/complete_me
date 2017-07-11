@@ -21,7 +21,7 @@ class Tree
         @count += 1
       end
       node.valid_word = true
-      @count
+      # @count
     else
       saved_letter = word[index]
       unless node.children[saved_letter].nil?
@@ -68,12 +68,21 @@ class Tree
   end
 
   def populate(file)
-    words = File.readlines(file)
-    words.each do |word|
+    file = file.split("\n")
+    file.each do |word|
       word.chomp!
       insert(word)
     end
-    @count
+    # @count
+  end
+
+  def read(file)
+    # words = File.readlines(file)
+    # words.each do |word|
+    #   word.chomp!
+    #   insert(word)
+    # end
+    File.readlines(file)
   end
 
   def delete(word, node = @root)

@@ -1,6 +1,8 @@
+require 'simplecov'
+SimpleCov.start
 require 'minitest/autorun'
 require 'minitest/pride'
-require './lib/complete_me.rb'
+require '../lib/complete_me.rb'
 require 'pry'
 require 'simplecov'
 SimpleCov.start
@@ -8,39 +10,72 @@ SimpleCov.start
 
 class CompleteMeTest < Minitest::Test
   def test_it_has_a_root
-    complete = CompleteMe.new
+    completion = CompleteMe.new
 
-    assert complete.trie.root
+    assert completion.trie.root
+  end
+
+  def test_words_can_be_inserted
+    completion = CompleteMe.new
+    assert true, completion.insert("pizza")
+    assert true, completion.insert("pizzeria")
   end
 
   def test_if_it_returns_count
-    complete = CompleteMe.new
+    completion = CompleteMe.new
+    completion.insert("pasta")
+    completion.insert("calzone")
+    assert_equal 2, completion.count
+  end
 
-    assert_equal 1, complete.insert("pizza")
+  def test_when_word_is_selected_weight_is_incremented
+    completion = CompleteMe.new
+    completion.insert("pizza")
+    assert_equal 1, completion.select("piz", "pizza")
 
-    complete.insert("pasta")
-    complete.insert("calzone")
-
-    assert_equal 4, complete.insert("cake")
+    completion.insert("calzone")
+    completion.select("piz", "calzone")
+    completion.select("piz", "calzone")
+    completion.select("piz", "calzone")
+    assert_equal 4, completion.select("piz", "calzone")
   end
 
   def test_it_can_suggest_words
+<<<<<<< HEAD
     complete = Tree.new
     expected = ["pizza", "pizzeria", "pizzicato", "pizzle", "pize"]
     complete.insert("pizza")
 
     assert_equal ["pizza"], complete.suggest("piz")
+=======
+    completion = CompleteMe.new
+    expected = ["pizzeria", "pizzicato", "pizzle", "pizza", "pize"]
+    completion.insert("pizzeria")
+    completion.insert("pizzicato")
+    completion.insert("pizzle")
+    completion.insert("pize")
+    completion.insert("pizza")
+>>>>>>> 783c0038bcf8440d0d0244a2874ec5183b09599b
 
-    complete.populate('/usr/share/dict/words')
+    assert_equal ["pizzeria", "pizzicato", "pizzle", "pizza", "pize"], completion.suggest("piz")
 
+    completion.populate('/usr/share/dict/words')
 
-    assert_equal expected, complete.suggest("piz")
+    assert_equal expected, completion.suggest("piz")
   end
 
   def test_it_can_populate_with_dictionary
-    complete = CompleteMe.new
+    completion = CompleteMe.new
+    dictionary = File.read("/usr/share/dict/words")
+    assert completion.populate(dictionary)
+  end
 
-    assert_equal 235886, complete.populate('/usr/share/dict/words')
+  def test_dictionary_count_when_populated
+    skip
+    completion = CompleteMe.new
+    dictionary = File.read("/usr/share/dict/words")
+    completionpopulate(dictionary)
+    assert_equal 235886, completion.count
   end
 
 end
