@@ -76,14 +76,15 @@ class Tree
     @count
   end
 
-  def delete(word, node = @root, index = 0, temp_letter = word[index])
-    if node.children[temp_letter].freq == 1 && node.children.count == 1
-      node.children = {}
-    else
-      index += 1
-      temp_letter = word[index]
-      delete(word, node.children[temp_letter], index, temp_letter)
+  def delete(word, node = @root)
+    index = 0
+    temp_letter = "whatever"
+    until node.children[temp_letter].freq == 1 && node.children.count == 1 || node.children[temp_letter].nil?
+      temp_letter = word.slice(0, 1)
+      node = node.children[temp_letter]
+      # delete(word, node.children[temp_letter], index, temp_letter =  word[index])
     end
+    node.children = {}
   end
 
 end
