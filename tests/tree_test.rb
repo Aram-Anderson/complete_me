@@ -68,7 +68,6 @@ class TreeTest < Minitest::Test
   end
 
   def test_dictionary_count_when_populated
-    skip
     tree = Tree.new
     dictionary = File.read("/usr/share/dict/words")
     tree.populate(dictionary)
