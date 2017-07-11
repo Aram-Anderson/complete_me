@@ -10,6 +10,10 @@ class CompleteMe
     @trie
   end
 
+  def count
+    @trie.count
+  end
+
   def insert(word)
     @trie.insert(word)
   end
