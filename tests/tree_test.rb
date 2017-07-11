@@ -2,7 +2,7 @@ require 'simplecov'
 SimpleCov.start
 require 'minitest/autorun'
 require 'minitest/pride'
-require '../lib/tree.rb'
+require './lib/tree.rb'
 require 'pry'
 
 
@@ -74,4 +74,29 @@ class TreeTest < Minitest::Test
     assert_equal 235886, tree.count
   end
 
+  def test_if_words_can_be_deleted
+    tree = Tree.new
+    tree.insert("pizza")
+    tree.insert("pizzeria")
+
+    assert_equal ["pizza", "pizzeria"], tree.suggest("piz")
+
+    tree.delete("pizza")
+
+    assert_equal ["pizzeria"], tree.suggest("piz")
+  end
+
+  def test_if_words_can_be_deleted_with_populated_tree
+    tree = Tree.new
+    dictionary = File.read("/usr/share/dict/words")
+    tree.populate(dictionary)
+    expected = ["pize", "pizza", "pizzeria", "pizzicato", "pizzle"]
+    expected_2 = ["pize", "pizzeria", "pizzicato", "pizzle"]
+
+    assert_equal expected, tree.suggest("piz")
+
+    tree.delete("pizza")
+
+    assert_equal expected_2, tree.suggest("piz")
+  end
 end
