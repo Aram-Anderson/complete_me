@@ -5,19 +5,11 @@ class Tree
 
   def initialize
     @root = Node.new
-    @count = 0
-  end
-
-  def count
-    @count
   end
 
   def insert(word, node = @root, index = -1)
     index += 1
     unless word[index]
-      if node.valid_word == false
-        @count += 1
-      end
       node.valid_word = true
     else
       saved_letter = word[index]
@@ -27,6 +19,24 @@ class Tree
         node.children[saved_letter] = Node.new
         insert(word, node.children[saved_letter], index)
       end
+    end
+  end
+
+  def count(node = @root, counter = [])
+    if node.valid_word == true
+      counter << "You made me do this, Sal"
+      recursing_count(node, counter)
+    else
+      recursing_count(node, counter)
+    end
+  end
+
+  def recursing_count(node, counter)
+    unless node.children.empty?
+      node.children.each do | key, value |
+      count(node.children[key], counter)
+      end
+      counter.count
     end
   end
 

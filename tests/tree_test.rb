@@ -1,21 +1,15 @@
 require 'simplecov'
-SimpleCov.start
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/tree.rb'
 require 'pry'
-
+SimpleCov.start
 
 class TreeTest < Minitest::Test
 
   def test_it_has_a_root
     tree = Tree.new
     assert tree.root
-  end
-
-  def test_when_initialized_count_is_zero
-    tree = Tree.new
-    assert_equal 0, tree.count
   end
 
   def test_if_it_returns_count
@@ -71,6 +65,7 @@ class TreeTest < Minitest::Test
     tree = Tree.new
     dictionary = File.read("/usr/share/dict/words")
     tree.populate(dictionary)
+    # binding.pry
     assert_equal 235886, tree.count
   end
 

@@ -1,6 +1,5 @@
-require 'pry'
 class Node
-  attr_accessor :children, :valid_word, :freq, :weight
+  attr_accessor :children, :valid_word, :weight
 
   def initialize
     @children = {}
