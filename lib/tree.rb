@@ -37,10 +37,6 @@ class Tree
       count(node.children[key], counter)
       end
     end
-    counter_output(counter)
-  end
-
-  def counter_output(counter)
     counter.count
   end
 
