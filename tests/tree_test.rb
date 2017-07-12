@@ -1,6 +1,6 @@
 require 'simplecov'
 require 'minitest/autorun'
-require 'minitest/pride'
+require 'minitest/emoji'
 require './lib/tree.rb'
 require 'pry'
 SimpleCov.start

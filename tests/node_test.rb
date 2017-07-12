@@ -1,9 +1,10 @@
 require 'simplecov'
 SimpleCov.start
 require 'minitest'
+require 'minitest/emoji'
 require 'minitest/pride'
 require 'minitest/autorun'
-require '../lib/node'
+require './lib/node'
 
 class NodeTest < Minitest::Test
 
@@ -15,11 +16,6 @@ class NodeTest < Minitest::Test
   def test_node_initializes_with_valid_word_as_false
     node = Node.new
     assert_equal false, node.valid_word
-  end
-
-  def test_node_initializes_with_freq_at_zero
-    node = Node.new
-    assert_equal 0, node.freq
   end
 
   def test_node_initializes_with_weight_at_zero
