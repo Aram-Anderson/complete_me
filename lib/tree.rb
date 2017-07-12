@@ -41,6 +41,10 @@ class Tree
       count(node.children[key], counter)
       end
     end
+    return_count(counter)
+  end
+
+  def return_count(counter)
     if counter.empty?
       return 0
     else
@@ -58,7 +62,9 @@ class Tree
 
   def suggest(word, node = @root)
      word.each_char do |letter|
-      node.children.has_key?(letter)
+      unless node.children.has_key?(letter)
+        return "That word does not exist"
+      end
       node = node.children[letter]
     end
     populate_suggest(word, node)
