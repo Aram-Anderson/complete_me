@@ -2,7 +2,7 @@ require 'simplecov'
 SimpleCov.start
 require 'minitest/autorun'
 require 'minitest/pride'
-require './lib/complete_me.rb'
+require '../lib/complete_me.rb'
 require 'pry'
 
 
@@ -94,4 +94,79 @@ class CompleteMeTest < Minitest::Test
 
     assert_equal expected_2, completion.suggest("piz")
   end
+
+  def test_it_can_populate_with_denver_addresses
+    completion = CompleteMe.new
+    addresses = File.read("../data/addresses.csv")
+    assert completion.populate(addresses)
+  end
+
+  def test_denver_addresses_count_when_populated
+    completion = CompleteMe.new
+    addresses = File.read("../data/addresses.csv")
+    completion.populate(addresses)
+    assert_equal 304556, completion.count
+  end
+
+  def test_when_address_is_selected_weight_is_incremented
+    completion = CompleteMe.new
+    addresses = File.read("../data/addresses.csv")
+    completion.populate(addresses)
+    completion.select("1 N Broadway", "1 N Broadway Ste 105")
+    completion.select("1 N Broadway", "1 N Broadway Ste 105")
+    completion.select("1 N Broadway", "1 N Broadway Ste 105")
+    assert_equal 4, completion.select("1 N Broadway", "1 N Broadway Ste 105")
+  end
+
+  def test_it_can_suggest_words
+    completion = CompleteMe.new
+    addresses = File.read("../data/addresses.csv")
+    completion.populate(addresses)
+    expected = ["1 N Broadway Ste 105",
+                "1 N Broadway Ste 105A",
+                "1 N Broadway Ste 110A",
+                "1 N Broadway Ste 210A",
+                "1 N Broadway Ste 225A",
+                "1 N Broadway Ste 300A"]
+    assert_equal expected, completion.suggest("1 N Broadway Ste")
+  end
+
+  def test_it_can_suggest_weighted_word_first
+    completion = CompleteMe.new
+    addresses = File.read("../data/addresses.csv")
+    completion.populate(addresses)
+    completion.select("1 N Broadway Ste", "1 N Broadway Ste 210A")
+    completion.select("1 N Broadway Ste", "1 N Broadway Ste 210A")
+    expected = ["1 N Broadway Ste 210A",
+                "1 N Broadway Ste 105",
+                "1 N Broadway Ste 105A",
+                "1 N Broadway Ste 110A",
+                "1 N Broadway Ste 225A",
+                "1 N Broadway Ste 300A"]
+    assert_equal expected, completion.suggest("1 N Broadway Ste")
+  end
+
+  def test_if_words_can_be_deleted_with_populated_denver_addresses
+    completion = CompleteMe.new
+    addresses = File.read("../data/addresses.csv")
+    completion.populate(addresses)
+    expected    = ["1 N Broadway Ste 105",
+                  "1 N Broadway Ste 105A",
+                  "1 N Broadway Ste 110A",
+                  "1 N Broadway Ste 210A",
+                  "1 N Broadway Ste 225A",
+                  "1 N Broadway Ste 300A"]
+    expected_2  = ["1 N Broadway Ste 105",
+                  "1 N Broadway Ste 105A",
+                  "1 N Broadway Ste 110A",
+                  "1 N Broadway Ste 210A",
+                  "1 N Broadway Ste 300A"]
+
+    assert_equal expected, completion.suggest("1 N Broadway Ste")
+
+    completion.delete("1 N Broadway Ste 225A")
+
+    assert_equal expected_2, completion.suggest("1 N Broadway Ste")
+  end
+
 end
