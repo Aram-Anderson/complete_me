@@ -5,11 +5,16 @@ require 'minitest/pride'
 require './lib/complete_me.rb'
 require 'pry'
 
-
 class CompleteMeTest < Minitest::Test
   def test_it_has_a_root
     completion = CompleteMe.new
     assert completion.trie.root
+  end
+
+  def test_words_can_be_inserted
+    completion = CompleteMe.new
+    assert true, completion.insert("pizza")
+    assert true, completion.insert("pizzeria")
   end
 
   def test_if_it_returns_count
@@ -19,12 +24,6 @@ class CompleteMeTest < Minitest::Test
 
     completion.insert("calzone")
     assert_equal 2, completion.count
-  end
-
-  def test_words_can_be_inserted
-    completion = CompleteMe.new
-    assert true, completion.insert("pizza")
-    assert true, completion.insert("pizzeria")
   end
 
   def test_when_word_is_selected_weight_is_incremented
