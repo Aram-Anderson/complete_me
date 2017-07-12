@@ -12,20 +12,21 @@ class Tree
     unless word[index]
       node.valid_word = true
     else
-      saved_letter = word[index]
-      unless node.children[saved_letter].nil?
-        insert(word, node.children[saved_letter], index)
-      else
-        node.children[saved_letter] = Node.new
-        insert(word, node.children[saved_letter], index)
-      end
+      recursing_insert(word, node, index)
+    end
+  end
+
+  def recursing_insert(word, node = @root, index = -1)
+    saved_letter = word[index]
+    unless node.children[saved_letter].nil?
+      insert(word, node.children[saved_letter], index)
+    else
+      node.children[saved_letter] = Node.new
+      insert(word, node.children[saved_letter], index)
     end
   end
 
   def count(node = @root, counter = [])
-    # if node.children == {}
-    #   return 0
-    # end
     if node.valid_word == true
       counter << "You made me do this, Sal"
       recursing_count(node, counter)
