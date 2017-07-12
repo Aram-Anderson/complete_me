@@ -8,90 +8,90 @@ require 'pry'
 
 class CompleteMeTest < Minitest::Test
   def test_it_has_a_root
-    complete = CompleteMe.new
-    assert complete.trie.root
+    completion = CompleteMe.new
+    assert completion.trie.root
   end
 
   def test_if_it_returns_count
-    complete = CompleteMe.new
-    complete.insert("pizza")
-    assert_equal 1, complete.count
+    completion = CompleteMe.new
+    completion.insert("pizza")
+    assert_equal 1, completion.count
 
-    complete.insert("calzone")
-    assert_equal 2, complete.count
+    completion.insert("calzone")
+    assert_equal 2, completion.count
   end
 
   def test_words_can_be_inserted
-    complete = CompleteMe.new
-    assert true, complete.insert("pizza")
-    assert true, complete.insert("pizzeria")
+    completion = CompleteMe.new
+    assert true, completion.insert("pizza")
+    assert true, completion.insert("pizzeria")
   end
 
   def test_when_word_is_selected_weight_is_incremented
-    complete = CompleteMe.new
-    complete.insert("pizza")
-    assert_equal 1, complete.select("piz", "pizza")
+    completion = CompleteMe.new
+    completion.insert("pizza")
+    assert_equal 1, completion.select("piz", "pizza")
 
-    complete.insert("calzone")
-    complete.select("piz", "calzone")
-    complete.select("piz", "calzone")
-    complete.select("piz", "calzone")
-    assert_equal 4, complete.select("piz", "calzone")
+    completion.insert("calzone")
+    completion.select("piz", "calzone")
+    completion.select("piz", "calzone")
+    completion.select("piz", "calzone")
+    assert_equal 4, completion.select("piz", "calzone")
   end
 
   def test_it_can_suggest_words
-    complete = CompleteMe.new
+    completion = CompleteMe.new
     expected = ["pizzeria", "pizzicato", "pizzle", "pizza", "pize"]
-    complete.insert("pizzeria")
-    complete.insert("pizzicato")
-    complete.insert("pizzle")
-    complete.insert("pize")
-    complete.insert("pizza")
+    completion.insert("pizzeria")
+    completion.insert("pizzicato")
+    completion.insert("pizzle")
+    completion.insert("pize")
+    completion.insert("pizza")
 
-    assert_equal ["pizzeria", "pizzicato", "pizzle", "pizza", "pize"], complete.suggest("piz")
+    assert_equal ["pizzeria", "pizzicato", "pizzle", "pizza", "pize"], completion.suggest("piz")
 
-    complete.populate('/usr/share/dict/words')
+    completion.populate('/usr/share/dict/words')
 
-    assert_equal expected, complete.suggest("piz")
+    assert_equal expected, completion.suggest("piz")
   end
 
   def test_it_can_populate_with_dictionary
-    complete = CompleteMe.new
+    completion = CompleteMe.new
     dictionary = File.read("/usr/share/dict/words")
-    assert complete.populate(dictionary)
+    assert completion.populate(dictionary)
   end
 
   def test_dictionary_count_when_populated
-    complete = CompleteMe.new
+    completion = CompleteMe.new
     dictionary = File.read("/usr/share/dict/words")
-    complete.populate(dictionary)
+    completion.populate(dictionary)
     # binding.pry
-    assert_equal 235886, complete.count
+    assert_equal 235886, completion.count
   end
 
   def test_if_words_can_be_deleted
-    complete = CompleteMe.new
-    complete.insert("pizza")
-    complete.insert("pizzeria")
+    completion = CompleteMe.new
+    completion.insert("pizza")
+    completion.insert("pizzeria")
 
-    assert_equal ["pizza", "pizzeria"], complete.suggest("piz")
+    assert_equal ["pizza", "pizzeria"], completion.suggest("piz")
 
-    complete.delete("pizza")
+    completion.delete("pizza")
 
-    assert_equal ["pizzeria"], complete.suggest("piz")
+    assert_equal ["pizzeria"], completion.suggest("piz")
   end
 
-  def test_if_words_can_be_deleted_with_populated_complete
-    complete = CompleteMe.new
+  def test_if_words_can_be_deleted_with_populated_completion
+    completion = CompleteMe.new
     dictionary = File.read("/usr/share/dict/words")
-    complete.populate(dictionary)
+    completion.populate(dictionary)
     expected = ["pize", "pizza", "pizzeria", "pizzicato", "pizzle"]
     expected_2 = ["pize", "pizzeria", "pizzicato", "pizzle"]
 
-    assert_equal expected, complete.suggest("piz")
+    assert_equal expected, completion.suggest("piz")
 
-    complete.delete("pizza")
+    completion.delete("pizza")
 
-    assert_equal expected_2, complete.suggest("piz")
+    assert_equal expected_2, completion.suggest("piz")
   end
 end

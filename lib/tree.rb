@@ -36,8 +36,12 @@ class Tree
       node.children.each do | key, value |
       count(node.children[key], counter)
       end
-      counter.count
     end
+    counter_output(counter)
+  end
+
+  def counter_output(counter)
+    counter.count
   end
 
   def select(sub_string, suggestion, node = @root)
