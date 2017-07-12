@@ -39,19 +39,25 @@ class CompleteMeTest < Minitest::Test
     assert_equal 4, completion.select("piz", "calzone")
   end
 
-  def test_it_can_suggest_words
+  def test_it_can_suggest_words_for_piz
     completion = CompleteMe.new
-    expected = ["pizzeria", "pizzicato", "pizzle", "pizza", "pize"]
     completion.insert("pizzeria")
     completion.insert("pizzicato")
     completion.insert("pizzle")
     completion.insert("pize")
     completion.insert("pizza")
-
     assert_equal ["pizzeria", "pizzicato", "pizzle", "pizza", "pize"], completion.suggest("piz")
+  end
 
-    completion.populate('/usr/share/dict/words')
-
+  def test_it_can_suggest_words_for_piz_when_dictionary_is_populated
+    completion = CompleteMe.new
+    dictionary = File.read("/usr/share/dict/words")
+    completion.populate(dictionary)
+    expected = ["pize",
+                "pizza",
+                "pizzeria",
+                "pizzicato",
+                "pizzle"]
     assert_equal expected, completion.suggest("piz")
   end
 

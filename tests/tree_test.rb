@@ -41,14 +41,23 @@ class TreeTest < Minitest::Test
 
   def test_it_can_suggest_words
     tree = Tree.new
-    expected = ["pizzeria", "pizzicato", "pizzle", "pizza", "pize"]
+    expected = ["pizzeria",
+                "pizzicato",
+                "pizzle",
+                "pizza",
+                "pize"]
+
     tree.insert("pizzeria")
     tree.insert("pizzicato")
     tree.insert("pizzle")
     tree.insert("pize")
     tree.insert("pizza")
 
-    assert_equal ["pizzeria", "pizzicato", "pizzle", "pizza", "pize"], tree.suggest("piz")
+    assert_equal ["pizzeria",
+                  "pizzicato",
+                  "pizzle",
+                  "pizza",
+                  "pize"], tree.suggest("piz")
 
     tree.populate('/usr/share/dict/words')
 
@@ -65,7 +74,6 @@ class TreeTest < Minitest::Test
     tree = Tree.new
     dictionary = File.read("/usr/share/dict/words")
     tree.populate(dictionary)
-    # binding.pry
     assert_equal 235886, tree.count
   end
 
