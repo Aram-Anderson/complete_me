@@ -37,8 +37,8 @@ class Tree
       count(node.children[key], counter)
       end
     end
-    counter.count
-  end
+    # counter.count
+  end.count
 
   def select(sub_string, suggestion, node = @root)
     until suggestion.empty?
