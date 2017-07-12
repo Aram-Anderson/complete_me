@@ -12,7 +12,6 @@ class CompleteMeTest < Minitest::Test
   end
 
   def test_starting_count
-    skip
     assert_equal 0, cm.count
   end
 

@@ -65,7 +65,6 @@ class CompleteMeTest < Minitest::Test
     completion = CompleteMe.new
     dictionary = File.read("/usr/share/dict/words")
     completion.populate(dictionary)
-    # binding.pry
     assert_equal 235886, completion.count
   end
 
@@ -96,24 +95,21 @@ class CompleteMeTest < Minitest::Test
   end
 
   def test_it_can_populate_with_denver_addresses
-    skip
     completion = CompleteMe.new
-    addresses = File.read("../data/addresses.csv")
+    addresses = File.read("./data/addresses.csv")
     assert completion.populate(addresses)
   end
 
   def test_denver_addresses_count_when_populated
-    skip
     completion = CompleteMe.new
-    addresses = File.read("../data/addresses.csv")
+    addresses = File.read("./data/addresses.csv")
     completion.populate(addresses)
     assert_equal 304556, completion.count
   end
 
   def test_when_address_is_selected_weight_is_incremented
-    skip
     completion = CompleteMe.new
-    addresses = File.read("../data/addresses.csv")
+    addresses = File.read("./data/addresses.csv")
     completion.populate(addresses)
     completion.select("1 N Broadway", "1 N Broadway Ste 105")
     completion.select("1 N Broadway", "1 N Broadway Ste 105")
@@ -122,9 +118,8 @@ class CompleteMeTest < Minitest::Test
   end
 
   def test_it_can_suggest_addresses
-    skip
     completion = CompleteMe.new
-    addresses = File.read("../data/addresses.csv")
+    addresses = File.read("./data/addresses.csv")
     completion.populate(addresses)
     expected = ["1 N Broadway Ste 105",
                 "1 N Broadway Ste 105A",
@@ -136,9 +131,8 @@ class CompleteMeTest < Minitest::Test
   end
 
   def test_it_can_suggest_weighted_address_first
-    skip
     completion = CompleteMe.new
-    addresses = File.read("../data/addresses.csv")
+    addresses = File.read("./data/addresses.csv")
     completion.populate(addresses)
     completion.select("1 N Broadway Ste", "1 N Broadway Ste 210A")
     completion.select("1 N Broadway Ste", "1 N Broadway Ste 210A")
@@ -152,9 +146,8 @@ class CompleteMeTest < Minitest::Test
   end
 
   def test_if_addresses_can_be_deleted_with_populated_denver_addresses
-    skip
     completion = CompleteMe.new
-    addresses = File.read("../data/addresses.csv")
+    addresses = File.read("./data/addresses.csv")
     completion.populate(addresses)
     expected    = ["1 N Broadway Ste 105",
                   "1 N Broadway Ste 105A",

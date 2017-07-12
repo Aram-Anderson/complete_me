@@ -23,9 +23,9 @@ class Tree
   end
 
   def count(node = @root, counter = [])
-    if node.children == {}
-      return 0
-    end
+    # if node.children == {}
+    #   return 0
+    # end
     if node.valid_word == true
       counter << "You made me do this, Sal"
       recursing_count(node, counter)
@@ -40,8 +40,12 @@ class Tree
       count(node.children[key], counter)
       end
     end
-    # counter.count
-  end.count
+    if counter.empty?
+      return 0
+    else
+      counter.count
+    end
+  end
 
   def select(sub_string, suggestion, node = @root)
     until suggestion.empty?
