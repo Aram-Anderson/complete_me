@@ -48,7 +48,7 @@ class Tree
     if counter.empty?
       return 0
     else
-      counter.count
+      counter.length
     end
   end
 
